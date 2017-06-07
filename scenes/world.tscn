@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=1]
+[gd_scene load_steps=23 format=1]
 
 [ext_resource path="res://scripts/world.gd" type="Script" id=1]
 [ext_resource path="res://textures/background.png" type="Texture" id=2]
@@ -15,7 +15,9 @@
 [ext_resource path="res://textures/player/player_2_1_jump_l.png" type="Texture" id=13]
 [ext_resource path="res://textures/player/player_2_1_jump_r.png" type="Texture" id=14]
 [ext_resource path="res://textures/player/player_2_2_idle.png" type="Texture" id=15]
-[ext_resource path="res://scripts/camera.gd" type="Script" id=16]
+[ext_resource path="res://textures/player/player_2_2_jump_l.png" type="Texture" id=16]
+[ext_resource path="res://textures/player/player_2_2_jump_r.png" type="Texture" id=17]
+[ext_resource path="res://scripts/camera.gd" type="Script" id=18]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -33,11 +35,13 @@ animations = [ { "frames":[ ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 )
 
 [sub_resource type="SpriteFrames" id=4]
 
-animations = [ { "frames":[ ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 15 ) ], "loop":true, "name":"default", "speed":5.0 } ]
+animations = [ { "frames":[ ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 15 ), ExtResource( 16 ), ExtResource( 17 ) ], "loop":true, "name":"default", "speed":5.0 } ]
 
 [node name="world" type="Node2D"]
 
 script/script = ExtResource( 1 )
+win_cyan_path = "res://objects/win_cyan.tscn"
+win_pink_path = "res://objects/win_pink.tscn"
 
 [node name="background" type="StaticBody2D" parent="."]
 
@@ -115,6 +119,7 @@ transform/pos = Vector2( 184, 160 )
 
 [node name="player_1" type="RigidBody2D" parent="." groups=[ "player", "player_1" ]]
 
+editor/display_folded = true
 transform/pos = Vector2( 54, 284 )
 input/pickable = false
 shapes/0/shape = SubResource( 2 )
@@ -254,6 +259,6 @@ drag_margin/left = 0.2
 drag_margin/top = 0.2
 drag_margin/right = 0.2
 drag_margin/bottom = 0.2
-script/script = ExtResource( 16 )
+script/script = ExtResource( 18 )
 
 

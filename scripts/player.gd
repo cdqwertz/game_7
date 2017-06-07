@@ -16,7 +16,7 @@ export var action_right = "ui_right"
 export var action_invert_gravity = "ui_up"
 
 var jump = 3
-var power_up = 1
+var power_up = 0
 
 func _ready():
 	set_process(true)
@@ -104,6 +104,7 @@ func kill():
 	e.set_emitting(true)
 	
 	get_parent().get_node("camera").shake(0.1, 3)
+	global.kill()
 	
 	respawn()
 	

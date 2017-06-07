@@ -5,6 +5,8 @@ var score_2 = 0
 
 var max_score = 10
 
+var game_state = 0
+
 func _ready():
 	print("raedy")
 	
@@ -22,11 +24,17 @@ func score(player, n):
 		win(2)
 
 func win(player):
+	game_state = 1
+	
 	if player == 1:
-		print("cyan won")
+		get_tree().get_root().get_node("world").win(1)
 	elif player == 2:
-		print("pink won")
+		get_tree().get_root().get_node("world").win(2)
+		print("pink won ", score_1, " ", score_2)
 	else:
 		print("[error] unknown player")
+		
+func kill():
+	pass
 	
 	
