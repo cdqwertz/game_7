@@ -7,13 +7,16 @@ onready var my_sprite = get_node("sprite")
 onready var my_shot = load(shot_path)
 onready var my_explosion = load(explosion_path)
 
+onready var sample_jump = get_node("sample_jump")
+
 var gravity_dir = 1
 
 export var action_left = "ui_left"
 export var action_right = "ui_right"
 export var action_invert_gravity = "ui_up"
 
-var jump = 3;
+var jump = 3
+var power_up = 1
 
 func _ready():
 	set_process(true)
@@ -48,6 +51,7 @@ func _unhandled_input(event):
 			my_sprite.set_frame(4)
 		
 		shoot(velocity)
+		sample_jump.play("jump")
 		
 		jump -= 1
 	elif event.is_action_pressed(action_right) and jump > 0:
@@ -60,6 +64,7 @@ func _unhandled_input(event):
 			my_sprite.set_frame(5)
 		
 		shoot(velocity)
+		sample_jump.play("jump")
 		
 		jump -= 1
 	elif event.is_action_released(action_left) or event.is_action_released(action_right):
@@ -79,6 +84,13 @@ func _unhandled_input(event):
 	set_linear_velocity(velocity)
 	
 func shoot(velocity):
+	if power_up == 1:
+		shoot_2(Vector2((velocity.x/4*3), velocity.y))
+		shoot_2(Vector2(-(velocity.x/4*3), velocity.y))
+	else:
+		shoot_2(velocity)
+
+func shoot_2(velocity):
 	var shot = my_shot.instance()
 	shot.set_pos(get_pos()+Vector2(velocity.x/10.0, 0))
 	shot.velocity = Vector2(velocity.x*4, 0)

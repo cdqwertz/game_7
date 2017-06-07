@@ -13,6 +13,11 @@ func _process(delta):
 func body_enter(body):
 	if body != player:
 		if body.is_in_group("player"):
+			if body.is_in_group("player_1"):
+				global.score(2, 1)
+			elif body.is_in_group("player_2"):
+				global.score(1, 1)
+				
 			body.kill()
 		
 		queue_free()

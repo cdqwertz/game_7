@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=1]
+[gd_scene load_steps=21 format=1]
 
 [ext_resource path="res://scripts/world.gd" type="Script" id=1]
 [ext_resource path="res://textures/background.png" type="Texture" id=2]
@@ -10,11 +10,12 @@
 [ext_resource path="res://textures/player/player_1_2_idle.png" type="Texture" id=8]
 [ext_resource path="res://textures/player/player_1_2_jump_l.png" type="Texture" id=9]
 [ext_resource path="res://textures/player/player_1_2_jump_r.png" type="Texture" id=10]
-[ext_resource path="res://textures/player/player_2_1_idle.png" type="Texture" id=11]
-[ext_resource path="res://textures/player/player_2_1_jump_l.png" type="Texture" id=12]
-[ext_resource path="res://textures/player/player_2_1_jump_r.png" type="Texture" id=13]
-[ext_resource path="res://textures/player/player_2_2_idle.png" type="Texture" id=14]
-[ext_resource path="res://scripts/camera.gd" type="Script" id=15]
+[ext_resource path="res://sounds/player.tres" type="SampleLibrary" id=11]
+[ext_resource path="res://textures/player/player_2_1_idle.png" type="Texture" id=12]
+[ext_resource path="res://textures/player/player_2_1_jump_l.png" type="Texture" id=13]
+[ext_resource path="res://textures/player/player_2_1_jump_r.png" type="Texture" id=14]
+[ext_resource path="res://textures/player/player_2_2_idle.png" type="Texture" id=15]
+[ext_resource path="res://scripts/camera.gd" type="Script" id=16]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -32,7 +33,7 @@ animations = [ { "frames":[ ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 )
 
 [sub_resource type="SpriteFrames" id=4]
 
-animations = [ { "frames":[ ExtResource( 11 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ) ], "loop":true, "name":"default", "speed":5.0 } ]
+animations = [ { "frames":[ ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 15 ) ], "loop":true, "name":"default", "speed":5.0 } ]
 
 [node name="world" type="Node2D"]
 
@@ -112,9 +113,8 @@ transform/pos = Vector2( 74, 96 )
 
 transform/pos = Vector2( 184, 160 )
 
-[node name="player_1" type="RigidBody2D" parent="." groups=[ "player" ]]
+[node name="player_1" type="RigidBody2D" parent="." groups=[ "player", "player_1" ]]
 
-editor/display_folded = true
 transform/pos = Vector2( 54, 284 )
 input/pickable = false
 shapes/0/shape = SubResource( 2 )
@@ -157,7 +157,18 @@ transform/scale = Vector2( 2, 2 )
 frames = SubResource( 3 )
 animation = "default"
 
-[node name="player_2" type="RigidBody2D" parent="." groups=[ "player" ]]
+[node name="sample_jump" type="SamplePlayer2D" parent="player_1"]
+
+params/volume_db = -15.0
+params/pitch_scale = 1.0
+params/attenuation/min_distance = 1.0
+params/attenuation/max_distance = 2048.0
+params/attenuation/distance_exp = 1.0
+config/polyphony = 1
+config/samples = ExtResource( 11 )
+config/pitch_random = 1.0
+
+[node name="player_2" type="RigidBody2D" parent="." groups=[ "player", "player_2" ]]
 
 transform/pos = Vector2( 150, 284 )
 input/pickable = false
@@ -201,6 +212,18 @@ transform/scale = Vector2( 2, 2 )
 frames = SubResource( 4 )
 animation = "default"
 
+[node name="sample_jump" type="SamplePlayer2D" parent="player_2"]
+
+transform/pos = Vector2( -96, 0 )
+params/volume_db = -15.0
+params/pitch_scale = 1.0
+params/attenuation/min_distance = 1.0
+params/attenuation/max_distance = 2048.0
+params/attenuation/distance_exp = 1.0
+config/polyphony = 1
+config/samples = ExtResource( 11 )
+config/pitch_random = 1.0
+
 [node name="spawn_1" type="Node2D" parent="." groups=[ "spawn" ]]
 
 transform/pos = Vector2( 68, 162 )
@@ -231,6 +254,6 @@ drag_margin/left = 0.2
 drag_margin/top = 0.2
 drag_margin/right = 0.2
 drag_margin/bottom = 0.2
-script/script = ExtResource( 15 )
+script/script = ExtResource( 16 )
 
 
