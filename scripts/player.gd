@@ -63,6 +63,9 @@ func _unhandled_input(event):
 
 
 func left(velocity):
+	if not(jump > 0):
+		return velocity
+		 
 	velocity.x = -100;
 	velocity.y = -150*gravity_dir;
 	
@@ -78,6 +81,9 @@ func left(velocity):
 	return velocity
 
 func right(velocity):
+	if not(jump > 0):
+		return velocity
+		
 	velocity.x = 100;
 	velocity.y = -150*gravity_dir
 

@@ -12,24 +12,19 @@ func _ready():
 	randomize()
 	set_process(true)
 	set_process_unhandled_input(true)
-	
+
 func _process(delta):
 	timer += delta
-	
+
 	if timer > 10:
 		timer = 0
 		var random_powerup = randi()%3
 
-		if random_powerup == 2:
-			OS.set_time_scale(1.8)
-		else:
-			OS.set_time_scale(1)
-	
 		for pl in get_tree().get_nodes_in_group("player"):
 			pl.power_up = random_powerup
-			
+
 		print("randomize ", random_powerup)
-		
+
 		if random_powerup > 0:
 			get_node("camera").shake(0.1, 3)
 
@@ -37,10 +32,10 @@ func win(player):
 	for i in get_tree().get_nodes_in_group("player"):
 		i.kill()
 		i.queue_free()
-		
+
 	for i in get_tree().get_nodes_in_group("block"):
 		i.queue_free()
-	
+
 	if player == 1:
 		var obj = win_cyan.instance()
 		obj.set_pos(Vector2(320/2, 320/2))
@@ -55,5 +50,5 @@ func _unhandled_input(event):
 		global.game_state = 0
 		global.score_1 = 0
 		global.score_2 = 0
-		
+
 		get_tree().reload_current_scene()
