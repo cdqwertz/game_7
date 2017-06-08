@@ -16,16 +16,22 @@ func _ready():
 func _process(delta):
 	timer += delta
 	
-	if timer > 5:
+	if timer > 10:
 		timer = 0
-		
-		# add some random events to the game?
 		var random_powerup = randi()%3
 
+		if random_powerup == 2:
+			OS.set_time_scale(1.8)
+		else:
+			OS.set_time_scale(1)
+	
 		for pl in get_tree().get_nodes_in_group("player"):
 			pl.power_up = random_powerup
 			
 		print("randomize ", random_powerup)
+		
+		if random_powerup > 0:
+			get_node("camera").shake(0.1, 3)
 
 func win(player):
 	for i in get_tree().get_nodes_in_group("player"):

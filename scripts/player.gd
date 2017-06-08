@@ -32,6 +32,12 @@ func _process(delta):
 	var bodies = get_colliding_bodies()
 	if bodies.size() > 0:
 		jump = 3
+		
+		for body in bodies:
+			if body.is_in_group("top"):
+				set_gravity(-1, velocity)
+			elif body.is_in_group("bottom"):
+				set_gravity(1, velocity)
 	
 	set_linear_velocity(velocity)
 	
@@ -42,47 +48,64 @@ func _unhandled_input(event):
 	var velocity = get_linear_velocity()
 	
 	if event.is_action_pressed(action_left) and jump > 0:
-		velocity.x = -100;
-		velocity.y = -150*gravity_dir;
-		
-		if gravity_dir == 1:
-			my_sprite.set_frame(1)
-		else:
-			my_sprite.set_frame(4)
-		
-		shoot(velocity)
-		sample_jump.play("jump")
-		
-		jump -= 1
+		velocity = left(velocity)
 	elif event.is_action_pressed(action_right) and jump > 0:
-		velocity.x = 100;
-		velocity.y = -150*gravity_dir
-
-		if gravity_dir == 1:
-			my_sprite.set_frame(2)
-		else:
-			my_sprite.set_frame(5)
-		
-		shoot(velocity)
-		sample_jump.play("jump")
-		
-		jump -= 1
+		velocity = right(velocity)
 	elif event.is_action_released(action_left) or event.is_action_released(action_right):
 		if gravity_dir == 1:
 			my_sprite.set_frame(0)
 		else:
 			my_sprite.set_frame(3)
 	elif event.is_action_pressed(action_invert_gravity):
-		gravity_dir *= -1
-		velocity.y = 5*gravity_dir;
-		
-		if gravity_dir == 1:
-			my_sprite.set_frame(0)
-		else:
-			my_sprite.set_frame(3)
+		velocity = invert_gravity(velocity)
 		
 	set_linear_velocity(velocity)
+
+
+func left(velocity):
+	velocity.x = -100;
+	velocity.y = -150*gravity_dir;
 	
+	if gravity_dir == 1:
+		my_sprite.set_frame(1)
+	else:
+		my_sprite.set_frame(4)
+	
+	shoot(velocity)
+	sample_jump.play("jump")
+	
+	jump -= 1
+	return velocity
+
+func right(velocity):
+	velocity.x = 100;
+	velocity.y = -150*gravity_dir
+
+	if gravity_dir == 1:
+		my_sprite.set_frame(2)
+	else:
+		my_sprite.set_frame(5)
+	
+	shoot(velocity)
+	sample_jump.play("jump")
+	
+	jump -= 1
+	return velocity
+	
+func invert_gravity(velocity):
+	return set_gravity(gravity_dir * (-1), velocity)
+	
+func set_gravity(dir, velocity):
+	gravity_dir = dir
+	velocity.y = 5*gravity_dir;
+	
+	if gravity_dir == 1:
+		my_sprite.set_frame(0)
+	else:
+		my_sprite.set_frame(3)
+		
+	return velocity
+
 func shoot(velocity):
 	if power_up == 1:
 		shoot_2(Vector2((velocity.x/4*3), velocity.y))

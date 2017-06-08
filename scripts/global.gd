@@ -8,7 +8,7 @@ var max_score = 10
 var game_state = 0
 
 func _ready():
-	print("raedy")
+	pass
 	
 func score(player, n):
 	if player == 1:
