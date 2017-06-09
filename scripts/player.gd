@@ -35,9 +35,11 @@ func _process(delta):
 		
 		for body in bodies:
 			if body.is_in_group("top"):
-				set_gravity(-1, velocity)
+				if gravity_dir != -1 and velocity.y < 0:
+					set_gravity(-1, velocity)
 			elif body.is_in_group("bottom"):
-				set_gravity(1, velocity)
+				if gravity_dir != 1 and velocity.y > 0:
+					set_gravity(1, velocity)
 	
 	set_linear_velocity(velocity)
 	
@@ -114,17 +116,22 @@ func set_gravity(dir, velocity):
 
 func shoot(velocity):
 	if power_up == 1:
-		shoot_2(Vector2((velocity.x/4*3), velocity.y))
-		shoot_2(Vector2(-(velocity.x/4*3), velocity.y))
+		shoot_2(Vector2((velocity.x/4*3), velocity.y), 0)
+		shoot_2(Vector2(-(velocity.x/4*3), velocity.y), 0)
+	elif power_up == 2:
+		shoot_2(Vector2(velocity.x/2, velocity.y), 8)
+		shoot_2(Vector2(velocity.x/5*3 , velocity.y), 0)
+		shoot_2(Vector2(velocity.x/2, velocity.y), -8)
 	else:
-		shoot_2(velocity)
+		shoot_2(velocity, 0)
 
-func shoot_2(velocity):
+func shoot_2(velocity, y):
 	var shot = my_shot.instance()
-	shot.set_pos(get_pos()+Vector2(velocity.x/10.0, 0))
+	shot.set_pos(get_pos()+Vector2(velocity.x/10.0, y))
 	shot.velocity = Vector2(velocity.x*4, 0)
 	shot.player = self
 	get_parent().add_child(shot)
+	return shot
 
 func kill():
 	var e = my_explosion.instance()

@@ -13,6 +13,12 @@ func _ready():
 	set_process(true)
 	set_process_unhandled_input(true)
 
+	print(global.ai_1)
+	print(global.ai_2)
+
+	get_node("ai_1").enable = global.ai_1
+	get_node("ai_2").enable = global.ai_2
+
 func _process(delta):
 	timer += delta
 
@@ -52,3 +58,11 @@ func _unhandled_input(event):
 		global.score_2 = 0
 
 		get_tree().reload_current_scene()
+	elif event.is_action_pressed("ui_cancel"):
+		global.game_state = 2
+		global.score_1 = 0
+		global.score_2 = 0
+		global.ai_1 = false
+		global.ai_2 = false
+		
+		get_tree().change_scene("res://scenes/menu.tscn")

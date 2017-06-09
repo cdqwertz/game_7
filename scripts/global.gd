@@ -5,9 +5,12 @@ var score_2 = 0
 
 var max_score = 10
 
-var game_state = 0
+var game_state = 2
 
 var ai = true
+
+var ai_1 = false
+var ai_2 = false
 
 func _ready():
 	pass

@@ -10,16 +10,15 @@ var timer = 0
 var speed = 0.3
 
 func _ready():
-	if enable:
-		set_process(true)
-		randomize()
-		
-		speed += randf()*0.2 - 0.1
+	set_process(true)
+	randomize()
+	
+	speed += randf()*0.2 - 0.1
 
 func _process(delta):
 	timer += delta
 
-	if timer > speed and global.game_state == 0 and global.ai == true and get_tree().get_nodes_in_group("player").size() > 0:
+	if timer > speed and global.game_state == 0 and get_tree().get_nodes_in_group("player").size() > 0 and enable:
 		timer = 0
 
 		var pos = player.get_pos()

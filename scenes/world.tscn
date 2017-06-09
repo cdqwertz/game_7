@@ -141,7 +141,7 @@ transform/pos = Vector2( 74, 96 )
 
 transform/pos = Vector2( 184, 160 )
 
-[node name="player_1" type="RigidBody2D" parent="." groups=[ "player_1", "player" ]]
+[node name="player_1" type="RigidBody2D" parent="." groups=[ "player", "player_1" ]]
 
 editor/display_folded = true
 transform/pos = Vector2( 54, 284 )
